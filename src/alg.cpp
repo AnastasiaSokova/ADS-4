@@ -86,7 +86,6 @@ int countPairs3(int *arr, int len, int value) {
         }
         if (flag) {
             count += binsearch(arr, len, element, i);
-            cout << arr[i] << " " << count << endl;
             f[i] = arr[i];
         }
     }
