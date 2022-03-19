@@ -74,7 +74,7 @@ int countPairs3(int *arr, int len, int value) {
     int* f = new int[len];
     bool flag;
     for (int i = 0; i < len; ++i) {
-        f[i] = INT16_MAX;
+        f[i] = 32767;
     }
     for (int i = 0; i < len; ++i) {
         flag = true;
