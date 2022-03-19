@@ -45,49 +45,45 @@ int countPairs2(int *arr, int len, int value) {
     return count;
 }
 
-int binsearch(int* arr, int size, int value, int place) {
-    int i = 0, j = size - 1;
-    int k = 0;
-    int* brr = new int[size];
-    for (int i = 0; i < size; ++i) {
-        brr[i] = 0;
-    }
-    while (i < j) {
+int binsearch(int* arr, int k, int len, int element) {
+    int mid, side;
+    int count = 0;
+    int i = k; int j = len;
+    while (i < j - 1) {
         int mid = i + (j - i) / 2;
-        if (arr[mid] >= value) {
+        if (arr[mid] > element) {
             j = mid;
+        } else if (arr[mid] < element) {
+            i = mid;
         } else {
-            i = mid + 1;
-        }
-        if (arr[j] == value && brr[j] == 0 && j != place) {
-            k++;
-            brr[j] = 1;
+            count++;
+            side = mid - 1;
+            while (arr[side] == element) {
+                if (side > i) {
+                    side--;
+                    count++;
+                }
+            }
+            side = mid + 1;
+            while (arr[side] == element) {
+                if (side < j) {
+                    side++;
+                    count++;
+                }
+            }
+            break;
         }
     }
-    return k;
+    return count;
 }
 
 int countPairs3(int *arr, int len, int value) {
     sort(arr, len);
     int count = 0;
-    int element = 0;
-    int* f = new int[len];
-    bool flag;
-    for (int i = 0; i < len; ++i) {
-        f[i] = 32767;
-    }
-    for (int i = 0; i < len; ++i) {
-        flag = true;
-        element = value - arr[i];
-        for (int k = 0; k < len; ++k) {
-            if (f[k] == element) {
-                flag = false;
-            }
-        }
-        if (flag) {
-            count += binsearch(arr, len, element, i);
-            f[i] = arr[i];
-        }
+    int element;
+    for (int k = 0; k < len - 1; ++k) {
+        element = value - arr[k];
+        count += binsearch(arr, k, len, element);
     }
     return count;
 }
