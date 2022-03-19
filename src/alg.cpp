@@ -44,37 +44,50 @@ int countPairs2(int *arr, int len, int value) {
     }
     return count;
 }
+
+int binsearch(int* arr, int size, int value, int place) {
+    int i = 0, j = size - 1;
+    int k = 0;
+    int* brr = new int[size];
+    for (int i = 0; i < size; ++i) {
+        brr[i] = 0;
+    }
+    while (i < j) {
+        int mid = i + (j - i) / 2;
+        if (arr[mid] >= value) {
+            j = mid;
+        } else {
+            i = mid + 1;
+        }
+        if (arr[j] == value && brr[j] == 0 && j != place) {
+            k++;
+            brr[j] = 1;
+        }
+    }
+    return k;
+}
+
 int countPairs3(int *arr, int len, int value) {
-  sort(arr, len);
-    int count = 0, element;
+    sort(arr, len);
+    int count = 0;
+    int element = 0;
+    int* f = new int[len];
     bool flag;
-    for (int l = 0; l < len; ++l) {
-        element = value - arr[l];
-        while (true) {
-            flag = true;
-            int i = 0, j = len - i;
-            while (i < j) {
-                int mid = i + (j - i) / 2;
-                if (arr[mid] == element) {
-                    for (int ii = mid; ii < len; ++ii) {
-                        arr[ii] = arr[ii + 1];
-                    }
-                    len--;
-                    count++;
-                    flag = false;
-                    break;
-                } else if (arr[mid] > element) {
-                    j = mid;
-                } else {
-                    i = mid + 1;
-                }
+    for (int i = 0; i < len; ++i) {
+        f[i] = INT16_MAX;
+    }
+    for (int i = 0; i < len; ++i) {
+        flag = true;
+        element = value - arr[i];
+        for (int k = 0; k < len; ++k) {
+            if (f[k] == element) {
+                flag = false;
             }
-            if (i == j && arr[i] == element) {
-                count++;
-            }
-            if (flag) {
-                break;
-            }
+        }
+        if (flag) {
+            count += binsearch(arr, len, element, i);
+            cout << arr[i] << " " << count << endl;
+            f[i] = arr[i];
         }
     }
     return count;
