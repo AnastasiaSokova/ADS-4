@@ -19,9 +19,8 @@ void sort(int* arr, int len) {
 }
 
 int countPairs1(int *arr, int len, int value) {
-  sort(arr, len);
     int count = 0;
-    for (int i = 0; i < len; ++i) {
+    for (int i = 0; i < len - 1; ++i) {
         for (int j = i + 1; j < len; ++j) {
             if (arr[i] + arr[j] == value) {
                 count++;
@@ -31,9 +30,8 @@ int countPairs1(int *arr, int len, int value) {
     return count;
 }
 int countPairs2(int *arr, int len, int value) {
-  sort(arr, len);
     int count = 0;
-    for (int i = len; i >= 0; --i) {
+    for (int i = len - 1; i >= 0; --i) {
         if (arr[i] <= value) {
             for (int j = i + 1; j < len; ++j) {
                 if (arr[i] + arr[j] == value) {
@@ -50,29 +48,28 @@ int binsearch(int* arr, int k, int len, int element) {
     int count = 0;
     int i = k; int j = len;
     while (i < j - 1) {
-        int mid = i + (j - i) / 2;
+        int mid = (i + j) / 2;
         if (arr[mid] > element) {
             j = mid;
-        } else if (arr[mid] < element) {
+        }
+        else if (arr[mid] < element) {
             i = mid;
-        } else {
+        }
+        else {
             count++;
-            side = mid - 1;
-            while (arr[side] == element) {
-                if (side > i) {
-                    side--;
-                    count++;
-                }
+            int side = mid + 1;
+            while ((arr[side] == element) && (side < j)) {
+                count++;
+                side++;
             }
-            side = mid + 1;
-            while (arr[side] == element) {
-                if (side < j) {
-                    side++;
-                    count++;
-                }
+            side = mid - 1;
+            while ((arr[side] == element) && (side > i)) {
+                count++;
+                side--;
             }
             break;
         }
+
     }
     return count;
 }
