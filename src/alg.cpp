@@ -51,11 +51,9 @@ int binsearch(int* arr, int k, int len, int element) {
         int mid = (i + j) / 2;
         if (arr[mid] > element) {
             j = mid;
-        }
-        else if (arr[mid] < element) {
+        } else if (arr[mid] < element) {
             i = mid;
-        }
-        else {
+        } else {
             count++;
             int side = mid + 1;
             while ((arr[side] == element) && (side < j)) {
