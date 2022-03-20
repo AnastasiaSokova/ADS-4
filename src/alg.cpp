@@ -67,7 +67,6 @@ int binsearch(int* arr, int k, int len, int element) {
             }
             break;
         }
-
     }
     return count;
 }
